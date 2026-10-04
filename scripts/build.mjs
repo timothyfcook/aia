@@ -89,22 +89,26 @@ const luminance = (hex) => {
 };
 const contrast = (a, b) => { const [x, y] = [luminance(a), luminance(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
 const AA = 4.5;
+// Body text aims higher than AA, since mid-tone colors at AA still read as muddy
+const BODY_CONTRAST = 5.5;
 const WHITE = "#FFFFFF";
 const BODY_DARK = "#1F1E1D";
 
-// Darken a color until white text on it passes AA
-function tabColor(hex) {
+// Darken a color until white text on it reaches the target contrast
+function darkenFor(hex, target) {
   let n = parseInt(hex.slice(1), 16), [r, g, b] = [n >> 16, (n >> 8) & 255, n & 255];
   const toHex = () => "#" + [r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");
-  while (contrast(toHex(), WHITE) < AA) [r, g, b] = [r * 0.96, g * 0.96, b * 0.96];
+  while (contrast(toHex(), WHITE) < target) [r, g, b] = [r * 0.97, g * 0.97, b * 0.97];
   return toHex();
 }
 
 function badgeColors(entry, mono) {
-  const body = mono ? "#E7E5DF" : entry.color;
-  const tab = mono ? "#3D3D3A" : tabColor(entry.dark);
-  const ink = contrast(body, BODY_DARK) >= contrast(body, WHITE) ? BODY_DARK : WHITE;
-  if (contrast(body, ink) < AA) throw new Error(`Text contrast below AA on ${entry.code}`);
+  let body = mono ? "#E7E5DF" : entry.color;
+  let ink = contrast(body, BODY_DARK) >= contrast(body, WHITE) ? BODY_DARK : WHITE;
+  // Neither dark nor white reads well on mid-tone colors: deepen the color and use white
+  if (contrast(body, ink) < BODY_CONTRAST) { body = darkenFor(body, BODY_CONTRAST); ink = WHITE; }
+  // The tab stays clearly darker than the body, and white "AIA" on it passes AA
+  const tab = mono ? "#3D3D3A" : darkenFor(entry.dark, Math.max(AA, contrast(body, WHITE) * 1.6));
   return { body, tab, ink };
 }
 
