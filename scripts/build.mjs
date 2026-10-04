@@ -213,7 +213,7 @@ const write = (rel, data) => {
   const file = join(outDir, rel);
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, data);
-  zipFiles[`aia-badges-${spec.version}/${rel}`] = typeof data === "string" ? new TextEncoder().encode(data) : data;
+  zipFiles[`aia-labels-${spec.version}/${rel}`] = typeof data === "string" ? new TextEncoder().encode(data) : data;
 };
 
 const sizes = {};
@@ -243,7 +243,7 @@ for (const [name, chartFn] of [["chart", gridChart], ["chart-icons", iconsChart]
   write(`${name}.png`, png(svgStr, CHART.w));
 }
 // Fixed timestamp so the zip only changes when its contents do
-writeFileSync(join(outDir, `aia-badges-${spec.version}.zip`), zipSync(zipFiles, { mtime: "2026-10-04T00:00:00Z" }));
+writeFileSync(join(outDir, `aia-labels-${spec.version}.zip`), zipSync(zipFiles, { mtime: "2026-10-04T00:00:00Z" }));
 
 // Every badge size, so sites can give snippets an exact width/height
 writeFileSync(join(outDir, "sizes.json"), JSON.stringify(sizes, null, 2) + "\n");
