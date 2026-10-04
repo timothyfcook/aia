@@ -39,6 +39,11 @@ Each label comes as a full-width badge, a medium badge, a compact badge and an i
 **Compact (100×19)**<br>
 <img src="assets/v1/1x2/compact.svg" width="100" height="19" alt="AIA 1x2 · Polished: original ideas, some AI writing">
 
+**Text line**<br>
+<img src="assets/v1/1x2/icon.svg" width="16" height="16" alt=""> **[AIA 1x2 · Polished.](https://timothyfcook.com/aia/1x2)** Original ideas, some AI writing.
+
+Real text rather than an image, so it matches the surrounding page and works where images don't.
+
 The easiest way to add one is the chooser at [timothyfcook.com/aia](https://timothyfcook.com/aia), which gives you copy-paste Markdown, HTML and plain text. For example, in Markdown:
 
 ```markdown
