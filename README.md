@@ -14,30 +14,30 @@ Each label has two scores from 1 to 3, ideas first and words second. On both sca
 
 | Badge | Meaning |
 |:---|:---|
-| <img src="assets/v1/1x1/medium.svg" width="97" height="31" alt="AIA 1x1 · No AI"> | A person's own ideas and writing. Spellcheck is allowed. |
-| <img src="assets/v1/1x2/medium.svg" width="97" height="31" alt="AIA 1x2 · Polished"> | The ideas and the draft were human, but AI did copyedits and redrafting. |
-| <img src="assets/v1/1x3/medium.svg" width="97" height="31" alt="AIA 1x3 · Proxied"> | The argument, prompts, and outline are human, but most of the writing is done by AI. |
-| <img src="assets/v1/2x1/medium.svg" width="97" height="31" alt="AIA 2x1 · Informed"> | The thinking was developed with AI through research, brainstorming or debate, but a person wrote every word. |
-| <img src="assets/v1/2x2/medium.svg" width="97" height="31" alt="AIA 2x2 · Paired"> | A person collaborated with AI on both the ideas and writing. |
-| <img src="assets/v1/2x3/medium.svg" width="97" height="31" alt="AIA 2x3 · Directed"> | Ideas shaped together, with AI writing most text under direction. |
-| <img src="assets/v1/3x1/medium.svg" width="97" height="31" alt="AIA 3x1 · Borrowed"> | The ideas largely came from AI, and a person wrote them up in their own words. |
-| <img src="assets/v1/3x2/medium.svg" width="97" height="31" alt="AIA 3x2 · Curated"> | AI came up with the ideas and first draft. A person cut and reworked it. |
-| <img src="assets/v1/3x3/medium.svg" width="97" height="31" alt="AIA 3x3 · Slop"> | Vibe writing. A person provided a minimal prompt and the AI did the rest. |
+| <img src="assets/v1/1x1/medium.svg" width="147" height="31" alt="AIA 1x1 · No AI"> | A person's own ideas and writing. Spellcheck is allowed. |
+| <img src="assets/v1/1x2/medium.svg" width="170" height="31" alt="AIA 1x2 · Polished"> | The ideas and the draft were human, but AI did copyedits and redrafting. |
+| <img src="assets/v1/1x3/medium.svg" width="164" height="31" alt="AIA 1x3 · Proxied"> | The argument, prompts, and outline are human, but most of the writing is done by AI. |
+| <img src="assets/v1/2x1/medium.svg" width="173" height="31" alt="AIA 2x1 · Informed"> | The thinking was developed with AI through research, brainstorming or debate, but a person wrote every word. |
+| <img src="assets/v1/2x2/medium.svg" width="158" height="31" alt="AIA 2x2 · Paired"> | A person collaborated with AI on both the ideas and writing. |
+| <img src="assets/v1/2x3/medium.svg" width="172" height="31" alt="AIA 2x3 · Directed"> | Ideas shaped together, with AI writing most text under direction. |
+| <img src="assets/v1/3x1/medium.svg" width="177" height="31" alt="AIA 3x1 · Borrowed"> | The ideas largely came from AI, and a person wrote them up in their own words. |
+| <img src="assets/v1/3x2/medium.svg" width="169" height="31" alt="AIA 3x2 · Curated"> | AI came up with the ideas and first draft. A person cut and reworked it. |
+| <img src="assets/v1/3x3/medium.svg" width="146" height="31" alt="AIA 3x3 · Slop"> | Vibe writing. A person provided a minimal prompt and the AI did the rest. |
 
 The full definitions live in [`spec.json`](spec.json), which is the source of truth for everything in this repo.
 
 ## Badges
 
-Each label comes as a full-width badge, a medium badge, a compact badge and an icon, in color and one color.
+Each label comes as a full-width badge, a medium badge, a compact badge and an icon, in color and one color. Badges start with a dark "AIA" tab and the grid, then the label on its color. Widths fit each label's text; exact sizes are in [`sizes.json`](assets/v1/sizes.json).
 
 **Full width**<br>
-<img src="assets/v1/1x2/wide.svg" width="415" height="31" alt="AIA 1x2 · Polished: original ideas, some AI writing">
+<img src="assets/v1/1x2/wide.svg" width="371" height="31" alt="AIA 1x2 · Polished: original ideas, some AI writing">
 
-**Medium (97×31)**<br>
-<img src="assets/v1/1x2/medium.svg" width="97" height="31" alt="AIA 1x2 · Polished: original ideas, some AI writing">
+**Medium**<br>
+<img src="assets/v1/1x2/medium.svg" width="170" height="31" alt="AIA 1x2 · Polished: original ideas, some AI writing">
 
-**Compact (100×19)**<br>
-<img src="assets/v1/1x2/compact.svg" width="100" height="19" alt="AIA 1x2 · Polished: original ideas, some AI writing">
+**Compact**<br>
+<img src="assets/v1/1x2/compact.svg" width="129" height="19" alt="AIA 1x2 · Polished: original ideas, some AI writing">
 
 **Text line**<br>
 <img src="assets/v1/1x2/icon.svg" width="16" height="16" alt=""> **[AIA 1x2 · Polished.](https://timothyfcook.com/aia/1x2)** Original ideas, some AI writing.
@@ -54,9 +54,9 @@ Files are served from `https://timothyfcook.com/aia/v1/<code>/<file>`:
 
 | File | What it is |
 |---|---|
-| `wide.svg`, `wide.png`, `wide@2x.png` | Full-width badge: icon, code, name and summary (31px tall, width fits the text) |
-| `medium.svg`, `medium.png`, `medium@2x.png` | Medium badge: icon, code and name (97×31) |
-| `compact.svg`, `compact.png`, `compact@2x.png` | Compact badge: icon and code (100×19) |
+| `wide.svg`, `wide.png`, `wide@2x.png` | Full-width badge: code, name and summary (31px tall) |
+| `medium.svg`, `medium.png`, `medium@2x.png` | Medium badge: code and name (31px tall) |
+| `compact.svg`, `compact.png`, `compact@2x.png` | Compact badge: code and name (19px tall) |
 | `icon.svg`, `icon.png` | 3×3 grid icon |
 
 Add `-mono` before the extension for the one-color version (e.g. `medium-mono.svg`). Exact sizes for every badge are in [`sizes.json`](assets/v1/sizes.json). Everything is also in [`aia-badges-v1.zip`](assets/v1/aia-badges-v1.zip).
