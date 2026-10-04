@@ -12,7 +12,7 @@ AIA is an attribution system for writing that helps readers understand a writer'
 
 Each label has two scores from 1 to 3, ideas first and words second. On both scales, 1 is original, 2 is some AI, and 3 is mostly AI.
 
-| Badge | Meaning |
+| Label | Meaning |
 |:---|:---|
 | <img src="assets/v1/1x1/medium.svg" width="147" height="31" alt="AIA 1x1 · No AI"> | A person's own ideas and writing. Spellcheck is allowed. |
 | <img src="assets/v1/1x2/medium.svg" width="170" height="31" alt="AIA 1x2 · Polished"> | The ideas and the draft were human, but AI did copyedits and redrafting. |
@@ -26,9 +26,9 @@ Each label has two scores from 1 to 3, ideas first and words second. On both sca
 
 The full definitions live in [`spec.json`](spec.json), which is the source of truth for everything in this repo.
 
-## Badges
+## Labels
 
-Each label comes as a full-width badge, a medium badge, a compact badge and an icon, in color and one color. Badges start with a dark "AIA" tab and the grid, then the label on its color. Widths fit each label's text; exact sizes are in [`sizes.json`](assets/v1/sizes.json).
+Each label comes in full-width, medium and compact sizes, plus an icon, in color and one color. Labels start with a dark "AIA" tab and the grid, then the label on its color. Widths fit each label's text; exact sizes are in [`sizes.json`](assets/v1/sizes.json).
 
 **Full width**<br>
 <img src="assets/v1/1x2/wide.svg" width="371" height="31" alt="AIA 1x2 · Polished: original ideas, some AI writing">
@@ -52,12 +52,12 @@ Files are served from `https://timothyfcook.com/aia/v1/<code>/<file>`:
 
 | File | What it is |
 |---|---|
-| `wide.svg`, `wide.png`, `wide@2x.png` | Full-width badge: code, name and summary (31px tall) |
-| `medium.svg`, `medium.png`, `medium@2x.png` | Medium badge: code and name (31px tall) |
-| `compact.svg`, `compact.png`, `compact@2x.png` | Compact badge: code and name (19px tall) |
+| `wide.svg`, `wide.png`, `wide@2x.png` | Full-width label: code, name and summary (31px tall) |
+| `medium.svg`, `medium.png`, `medium@2x.png` | Medium label: code and name (31px tall) |
+| `compact.svg`, `compact.png`, `compact@2x.png` | Compact label: code and name (19px tall) |
 | `icon.svg`, `icon.png` | 3×3 grid icon |
 
-Add `-mono` before the extension for the one-color version (e.g. `medium-mono.svg`). Exact sizes for every badge are in [`sizes.json`](assets/v1/sizes.json). The chart comes in two styles, [`chart.png`](assets/v1/chart.png) (grid) and [`chart-icons.png`](assets/v1/chart-icons.png) (each label's icon), also as SVG. Everything is also in [`aia-badges-v1.zip`](assets/v1/aia-badges-v1.zip).
+Add `-mono` before the extension for the one-color version (e.g. `medium-mono.svg`). Exact sizes for every label are in [`sizes.json`](assets/v1/sizes.json). The chart comes in two styles, [`chart.png`](assets/v1/chart.png) (grid) and [`chart-icons.png`](assets/v1/chart-icons.png) (each label's icon), also as SVG. Everything is also in [`aia-labels-v1.zip`](assets/v1/aia-labels-v1.zip).
 
 ## Versioning
 
@@ -69,5 +69,5 @@ Suggestions, critiques and fixes are welcome. See [CONTRIBUTING.md](CONTRIBUTING
 
 ## License
 
-- The AIA spec, badges, icons and chart are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) ([full text](LICENSE-CC-BY-4.0.txt)). A badge linked to its label page counts as credit.
+- The AIA spec, labels, icons and chart are licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) ([full text](LICENSE-CC-BY-4.0.txt)). A label linked to its page counts as credit.
 - The generator code in `scripts/` is licensed under the [MIT License](LICENSE).
