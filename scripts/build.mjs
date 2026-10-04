@@ -160,58 +160,48 @@ function splitBadge(entry, mono, size, withSummary) {
   return { svg: out, w, h };
 }
 
-// ─── Chart ────────────────────────────────────────────────────────────────────
-// The full ideas × words chart used in the essay, with each label's name in its chart color
-const isDark = (hex) => {
-  const n = parseInt(hex.slice(1), 16);
-  return 0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255) < 140;
-};
+// ─── Charts ───────────────────────────────────────────────────────────────────
+// The ideas × words chart, in two styles on the cream background of the project's icons:
+// "grid" (nine tinted squares with names, used in the essay) and "icons" (each label's icon and name).
+const CHART = { w: 1600, h: 1110, bg: "#F6F4EE", ink: "#1F1E1D", muted: "#6B6A65" };
 
-// The latin font subset has ↓ but not →, so a right arrow is the ↓ glyph turned
-function arrowRight(x, y, size, fill) {
-  const g = fonts[700].charToGlyph("↓");
-  const w = (g.advanceWidth * size) / fonts[700].unitsPerEm;
-  const cx = x + w / 2, cy = y - size * 0.36;
-  return `<path fill="${fill}" transform="rotate(-90 ${cx} ${cy})" d="${g.getPath(x, y, size).toPathData(2)}"/>`;
+function chartFrame() {
+  return `<rect width="${CHART.w}" height="${CHART.h}" fill="${CHART.bg}"/>` +
+    text(spec.name, { x: 90, y: 125, size: 56, weight: 700, fill: CHART.ink });
 }
 
-function chart() {
-  const W = 1600, H = 976;
-  const tileW = 338, tileH = 192, gap = 16, left = 472, top = 296;
-  const colX = (c) => left + (c - 1) * (tileW + gap);
-  const rowY = (r) => top + (r - 1) * (tileH + gap);
-  const AXIS = "#6B6A65", LABEL = "#3D3D3A";
+const chartSvg = (body, style) => {
+  const title = `${spec.name} chart (${style}): ideas × words`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${CHART.w}" height="${CHART.h}" viewBox="0 0 ${CHART.w} ${CHART.h}" role="img" aria-label="${title}"><title>${title}</title>${body}</svg>\n`;
+};
+const axisLabel = (str, x, y, anchor) => text(str, { x, y, size: 24, weight: 600, fill: CHART.muted, anchor });
 
-  let body = `<rect width="${W}" height="${H}" fill="#FAF9F5"/>`;
-  body += text(spec.name, { x: 80, y: 118, size: 52, weight: 700, fill: "#1F1E1D", tracking: -0.01 });
-
-  // Words axis, across the top
-  const gridMid = left + (3 * tileW + 2 * gap) / 2;
-  body += text("WORDS", { x: gridMid - 14, y: 198, size: 22, weight: 700, fill: AXIS, anchor: "middle", tracking: 0.18 });
-  body += arrowRight(gridMid + 44, 198, 22, AXIS);
-  spec.axes.words.forEach((w, i) => {
-    body += text(`${i + 1} · ${w}`, { x: colX(i + 1) + tileW / 2, y: 272, size: 26, weight: 500, fill: LABEL, anchor: "middle" });
-  });
-
-  // Ideas axis, down the left side, reading top to bottom
-  const gridMidY = top + (3 * tileH + 2 * gap) / 2;
-  body += `<g transform="rotate(90 110 ${gridMidY})">` +
-    text("IDEAS", { x: 96, y: gridMidY + 8, size: 22, weight: 700, fill: AXIS, anchor: "middle", tracking: 0.18 }) +
-    arrowRight(148, gridMidY + 8, 22, AXIS) + `</g>`;
-  spec.axes.ideas.forEach((idea, i) => {
-    body += text(`${i + 1} · ${idea}`, { x: 440, y: rowY(i + 1) + tileH / 2 + 9, size: 26, weight: 500, fill: LABEL, anchor: "end" });
-  });
-
+function gridChart() {
+  const left = 440, top = 240, cell = 244, gap = 22;
+  let body = chartFrame();
+  spec.axes.words.forEach((w, i) => { body += axisLabel(`${i + 1} · ${w}`, left + i * (cell + gap) + cell / 2, top - 30, "middle"); });
+  spec.axes.ideas.forEach((idea, i) => { body += axisLabel(`${i + 1} · ${idea}`, left - 30, top + i * (cell + gap) + cell / 2 + 8, "end"); });
   for (const entry of spec.codes) {
     const [r, c] = entry.code.split("x").map(Number);
-    const x = colX(c), y = rowY(r), dark = isDark(entry.color);
-    body += `<rect x="${x}" y="${y}" width="${tileW}" height="${tileH}" rx="16" fill="${entry.color}"/>`;
-    body += text(`AIA ${entry.code}`, { x: x + 32, y: y + 74, size: 22, weight: 500, fill: dark ? "#FFFFFFBF" : "#2C2C2A99", tracking: 0.06 });
-    body += text(entry.name, { x: x + 32, y: y + 128, size: 40, weight: 700, fill: dark ? "#FFFFFF" : "#1F1E1D", maxWidth: tileW - 64 });
+    const x = left + (c - 1) * (cell + gap), y = top + (r - 1) * (cell + gap);
+    body += `<rect x="${x}" y="${y}" width="${cell}" height="${cell}" rx="30" fill="${entry.tint}"/>`;
+    body += text(entry.name, { x: x + 28, y: y + cell - 34, size: 38, weight: 700, fill: CHART.ink, maxWidth: cell - 56 });
   }
+  return chartSvg(body, "grid");
+}
 
-  const title = `${spec.name} chart: ideas × words`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${title}"><title>${title}</title>${body}</svg>\n`;
+function iconsChart() {
+  const left = 470, top = 250, colW = 360, rowH = 270;
+  let body = chartFrame();
+  spec.axes.words.forEach((w, i) => { body += axisLabel(`${i + 1} · ${w}`, left + i * colW + 40, top - 30, "start"); });
+  spec.axes.ideas.forEach((idea, i) => { body += axisLabel(`${i + 1} · ${idea}`, left - 40, top + i * rowH + 80, "end"); });
+  for (const entry of spec.codes) {
+    const [r, c] = entry.code.split("x").map(Number);
+    const x = left + (c - 1) * colW + 40, y = top + (r - 1) * rowH;
+    body += grid(entry, false, x, y, 40, 9);
+    body += text(entry.name, { x: x + 162, y: y + 82, size: 38, weight: 700, fill: CHART.ink });
+  }
+  return chartSvg(body, "icons");
 }
 
 const png = (svgStr, width) => new Resvg(svgStr, { fitTo: { mode: "width", value: width } }).render().asPng();
@@ -247,9 +237,11 @@ for (const entry of spec.codes) {
   }
 }
 write("spec.json", JSON.stringify(spec, null, 2) + "\n");
-const chartSvg = chart();
-write("chart.svg", chartSvg);
-write("chart.png", png(chartSvg, 1600));
+for (const [name, chartFn] of [["chart", gridChart], ["chart-icons", iconsChart]]) {
+  const svgStr = chartFn();
+  write(`${name}.svg`, svgStr);
+  write(`${name}.png`, png(svgStr, CHART.w));
+}
 // Fixed timestamp so the zip only changes when its contents do
 writeFileSync(join(outDir, `aia-badges-${spec.version}.zip`), zipSync(zipFiles, { mtime: "2026-10-04T00:00:00Z" }));
 

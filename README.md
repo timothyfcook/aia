@@ -59,7 +59,7 @@ Files are served from `https://timothyfcook.com/aia/v1/<code>/<file>`:
 | `compact.svg`, `compact.png`, `compact@2x.png` | Compact badge: code and name (19px tall) |
 | `icon.svg`, `icon.png` | 3×3 grid icon |
 
-Add `-mono` before the extension for the one-color version (e.g. `medium-mono.svg`). Exact sizes for every badge are in [`sizes.json`](assets/v1/sizes.json). Everything is also in [`aia-badges-v1.zip`](assets/v1/aia-badges-v1.zip).
+Add `-mono` before the extension for the one-color version (e.g. `medium-mono.svg`). Exact sizes for every badge are in [`sizes.json`](assets/v1/sizes.json). The chart comes in two styles, [`chart.png`](assets/v1/chart.png) (grid) and [`chart-icons.png`](assets/v1/chart-icons.png) (each label's icon), also as SVG. Everything is also in [`aia-badges-v1.zip`](assets/v1/aia-badges-v1.zip).
 
 ## Versioning
 
