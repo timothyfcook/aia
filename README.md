@@ -11,17 +11,17 @@ AIA is an attribution system for writing that helps readers understand a writer'
 
 Each label has two scores from 1 to 3, ideas first and words second. On both scales, 1 is original, 2 is some AI, and 3 is mostly AI.
 
-| Code | Name | Meaning |
-|---|---|---|
-| 1x1 | No AI | A person's own ideas and writing. Spellcheck is allowed. |
-| 1x2 | Polished | The ideas and the draft were human, but AI did copyedits and redrafting. |
-| 1x3 | Proxied | The argument, prompts, and outline are human, but most of the writing is done by AI. |
-| 2x1 | Informed | The thinking was developed with AI through research, brainstorming or debate, but a person wrote every word. |
-| 2x2 | Paired | A person collaborated with AI on both the ideas and writing. |
-| 2x3 | Directed | The ideas were shaped together and AI wrote the text, with a person steering and editing. |
-| 3x1 | Borrowed | The ideas largely came from AI, and a person wrote them up in their own words. |
-| 3x2 | Curated | AI came up with the ideas and first draft. A person cut and reworked it. |
-| 3x3 | Slop | Vibe writing. A person provided a minimal prompt and the AI did the rest. |
+| Badge | Meaning |
+|---|---|
+| <img src="assets/v1/1x1/88x31.svg" width="132" height="47" alt="AIA 1x1 · No AI"> | A person's own ideas and writing. Spellcheck is allowed. |
+| <img src="assets/v1/1x2/88x31.svg" width="132" height="47" alt="AIA 1x2 · Polished"> | The ideas and the draft were human, but AI did copyedits and redrafting. |
+| <img src="assets/v1/1x3/88x31.svg" width="132" height="47" alt="AIA 1x3 · Proxied"> | The argument, prompts, and outline are human, but most of the writing is done by AI. |
+| <img src="assets/v1/2x1/88x31.svg" width="132" height="47" alt="AIA 2x1 · Informed"> | The thinking was developed with AI through research, brainstorming or debate, but a person wrote every word. |
+| <img src="assets/v1/2x2/88x31.svg" width="132" height="47" alt="AIA 2x2 · Paired"> | A person collaborated with AI on both the ideas and writing. |
+| <img src="assets/v1/2x3/88x31.svg" width="132" height="47" alt="AIA 2x3 · Directed"> | The ideas were shaped together and AI wrote the text, with a person steering and editing. |
+| <img src="assets/v1/3x1/88x31.svg" width="132" height="47" alt="AIA 3x1 · Borrowed"> | The ideas largely came from AI, and a person wrote them up in their own words. |
+| <img src="assets/v1/3x2/88x31.svg" width="132" height="47" alt="AIA 3x2 · Curated"> | AI came up with the ideas and first draft. A person cut and reworked it. |
+| <img src="assets/v1/3x3/88x31.svg" width="132" height="47" alt="AIA 3x3 · Slop"> | Vibe writing. A person provided a minimal prompt and the AI did the rest. |
 
 The full definitions live in [`spec.json`](spec.json), which is the source of truth for everything in this repo.
 
@@ -29,9 +29,16 @@ The full definitions live in [`spec.json`](spec.json), which is the source of tr
 
 Each label comes as a full-width badge, an 88×31 badge (the classic Creative Commons button size), an 80×15 compact badge and an icon, in color and one color.
 
-![AIA 1x2 · Polished: original ideas, some AI writing](assets/v1/1x2/wide.svg)
-![AIA 1x2 · Polished: original ideas, some AI writing](assets/v1/1x2/88x31.svg)
-![AIA 1x2 · Polished: original ideas, some AI writing](assets/v1/1x2/80x15.svg)
+Shown here at 2×; on a page they display at their real size.
+
+**Full width**<br>
+<img src="assets/v1/1x2/wide.svg" width="560" height="62" alt="AIA 1x2 · Polished: original ideas, some AI writing">
+
+**Medium (88×31)**<br>
+<img src="assets/v1/1x2/88x31.svg" width="176" height="62" alt="AIA 1x2 · Polished: original ideas, some AI writing">
+
+**Compact (80×15)**<br>
+<img src="assets/v1/1x2/80x15.svg" width="160" height="30" alt="AIA 1x2 · Polished: original ideas, some AI writing">
 
 The easiest way to add one is the chooser at [timothyfcook.com/aia](https://timothyfcook.com/aia), which gives you copy-paste Markdown, HTML and plain text. For example, in Markdown:
 
