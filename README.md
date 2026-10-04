@@ -3,6 +3,7 @@
 AIA is an attribution system for writing that helps readers understand a writer's intent. It works on two axes, ideas and words, to show how much of a piece came from AI and how much from a person. The goal is to give us all an honest framework for how much attention our writing deserves.
 
 **Get a label for your writing:** [timothyfcook.com/aia](https://timothyfcook.com/aia)
+
 **Read the reasoning:** [AI Attribution (AIA): Labels for AI Writing](https://timothyfcook.com/writing/2026/is-this-worth-my-attention)
 
 ![AI Attribution (AIA) chart: ideas × words](assets/v1/chart.png)
