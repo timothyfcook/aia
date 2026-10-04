@@ -22,10 +22,8 @@ const fonts = { 400: loadFont(400), 500: loadFont(500), 600: loadFont(600), 700:
 
 // ─── Palette ──────────────────────────────────────────────────────────────────
 const INK = "#2C2C2A";
-const INK_MUTED = "#5F5E5A";
 const styles = {
-  color: { bg: "#F6F4EE", border: "#D3D1C7" },
-  mono: { bg: "#FFFFFF", border: "#888780", tint: "#D9D7CF", solid: INK },
+  mono: { tint: "#D9D7CF", solid: INK },
 };
 
 // ─── Drawing ──────────────────────────────────────────────────────────────────
@@ -78,51 +76,84 @@ function svg(w, h, body, entry) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${label(entry)}"><title>${label(entry)}</title>${body}</svg>\n`;
 }
 
-function frame(w, h, rx, mono) {
-  const s = mono ? styles.mono : styles.color;
-  return `<rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" rx="${rx}" fill="${s.bg}" stroke="${s.border}"/>`;
-}
-
 const icon = (entry, mono) => svg(21, 21, grid(entry, mono, 0, 0, 6, 1.5), entry);
 
-// Medium badge: one width for every label, wide enough for the longest name
-const MEDIUM_NAME_SIZE = 12.5;
-const MEDIUM_W = Math.ceil(31 + Math.max(...spec.codes.map((e) => layout(fonts[600], e.name, MEDIUM_NAME_SIZE).width)) + 6);
+// ─── Badges ───────────────────────────────────────────────────────────────────
+// A dark tab with "AIA" and a white grid, then the label's color with the code and name
+// (and, on the full-width badge, the summary). Text colors are picked to pass WCAG AA (4.5:1).
+const luminance = (hex) => {
+  const n = parseInt(hex.slice(1), 16);
+  return [n >> 16, (n >> 8) & 255, n & 255]
+    .map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; })
+    .reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+};
+const contrast = (a, b) => { const [x, y] = [luminance(a), luminance(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+const AA = 4.5;
+const WHITE = "#FFFFFF";
+const BODY_DARK = "#1F1E1D";
 
-function badgeMedium(entry, mono) {
-  return svg(MEDIUM_W, 31,
-    frame(MEDIUM_W, 31, 3, mono) +
-    grid(entry, mono, 5, 5, 6, 1.5) +
-    text(`AIA ${entry.code}`, { x: 31, y: 12.5, size: 9.4, weight: 500, fill: INK_MUTED }) +
-    text(entry.name, { x: 31, y: 25, size: MEDIUM_NAME_SIZE, weight: 600, fill: INK }),
-    entry);
+// Darken a color until white text on it passes AA
+function tabColor(hex) {
+  let n = parseInt(hex.slice(1), 16), [r, g, b] = [n >> 16, (n >> 8) & 255, n & 255];
+  const toHex = () => "#" + [r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");
+  while (contrast(toHex(), WHITE) < AA) [r, g, b] = [r * 0.96, g * 0.96, b * 0.96];
+  return toHex();
 }
 
-// Too small for the name to be legible, so the compact badge shows the code only
-function badgeCompact(entry, mono) {
-  return svg(100, 19,
-    frame(100, 19, 2.5, mono) +
-    grid(entry, mono, 4, 2.5, 4, 1) +
-    text("AIA", { x: 57, y: 13.4, size: 10, weight: 500, fill: INK_MUTED, anchor: "end" }) +
-    text(entry.code, { x: 60.5, y: 13.4, size: 10, weight: 600, fill: INK }),
-    entry);
+function badgeColors(entry, mono) {
+  const body = mono ? "#E7E5DF" : entry.color;
+  const tab = mono ? "#3D3D3A" : tabColor(entry.dark);
+  const ink = contrast(body, BODY_DARK) >= contrast(body, WHITE) ? BODY_DARK : WHITE;
+  if (contrast(body, ink) < AA) throw new Error(`Text contrast below AA on ${entry.code}`);
+  return { body, tab, ink };
 }
 
-// Full-width badge: the text line ("AIA 1x2 · Polished. Original ideas, some AI writing.") inside a badge.
-// Width depends on the label's text, so it's returned alongside the SVG.
-function badgeWide(entry, mono) {
-  const lead = `AIA ${entry.code} · ${entry.name}.`;
-  const size = 15.6, x = 31, gap = 6, padRight = 11;
-  const leadW = layout(fonts[600], lead, size).width;
-  const summaryW = layout(fonts[400], entry.summary, size).width;
-  const w = Math.ceil(x + leadW + gap + summaryW + padRight);
-  const out = svg(w, 31,
-    frame(w, 31, 3, mono) +
-    grid(entry, mono, 5, 5, 6, 1.5) +
-    text(lead, { x, y: 21.2, size, weight: 600, fill: INK }) +
-    text(entry.summary, { x: x + leadW + gap, y: 21.2, size, weight: 400, fill: INK_MUTED }),
+// White grid on the dark tab: the label's own square solid, the others faint
+function tabGrid(entry, x, y, cell, gap) {
+  const [ideas, words] = entry.code.split("x").map(Number);
+  let out = "";
+  for (let r = 1; r <= 3; r++) {
+    for (let c = 1; c <= 3; c++) {
+      const own = r === ideas && c === words;
+      out += `<rect x="${+(x + (c - 1) * (cell + gap)).toFixed(2)}" y="${+(y + (r - 1) * (cell + gap)).toFixed(2)}" width="${cell}" height="${cell}" rx="${+(cell * 0.2).toFixed(2)}" fill="${WHITE}"${own ? "" : ' fill-opacity="0.2"'}/>`;
+    }
+  }
+  return out;
+}
+
+const SIZES = {
+  compact: { h: 19, r: 3, fs: 10, cell: 4, gap: 1, pad: 6 },
+  medium: { h: 31, r: 4, fs: 13, cell: 6, gap: 1.5, pad: 8 },
+};
+
+// Lays out tab + body; the dot between parts sits the same distance from both neighbors
+function splitBadge(entry, mono, size, withSummary) {
+  const { h, r, fs, cell, gap, pad } = SIZES[size];
+  const { body, tab, ink } = badgeColors(entry, mono);
+  const base = +(h / 2 + fs * 0.364).toFixed(2);
+  const gridW = cell * 3 + gap * 2;
+  const aiaW = layout(fonts[600], "AIA", fs).width;
+  const gridX = pad + aiaW + pad * 0.7;
+  const tabW = Math.ceil(gridX + gridW + pad * 0.8);
+  const dotGap = fs * 0.35, dot = fs * 0.16;
+
+  let x = tabW + pad + 1, parts = "";
+  const bold = (str) => { parts += text(str, { x, y: base, size: fs, weight: 700, fill: ink }); x += layout(fonts[700], str, fs).width; };
+  const regular = (str) => { parts += text(str, { x, y: base, size: fs, weight: 400, fill: ink }); x += layout(fonts[400], str, fs).width; };
+  const sep = () => { parts += `<circle cx="${+(x + dotGap + dot / 2).toFixed(2)}" cy="${h / 2}" r="${+(dot / 2).toFixed(2)}" fill="${ink}"/>`; x += dotGap * 2 + dot; };
+
+  bold(entry.code); sep(); bold(entry.name);
+  if (withSummary) { sep(); regular(entry.summary); }
+  const w = Math.ceil(x + pad + 1);
+
+  const out = svg(w, h,
+    `<rect width="${w}" height="${h}" rx="${r}" fill="${body}"/>` +
+    `<path d="M${r} 0H${tabW}V${h}H${r}A${r} ${r} 0 0 1 0 ${h - r}V${r}A${r} ${r} 0 0 1 ${r} 0Z" fill="${tab}"/>` +
+    text("AIA", { x: pad, y: base, size: fs, weight: 600, fill: WHITE }) +
+    tabGrid(entry, gridX, (h - gridW) / 2, cell, gap) +
+    parts,
     entry);
-  return { svg: out, w };
+  return { svg: out, w, h };
 }
 
 // ─── Chart ────────────────────────────────────────────────────────────────────
@@ -198,13 +229,16 @@ for (const entry of spec.codes) {
     const ic = icon(entry, mono);
     write(`${entry.code}/icon${suffix}.svg`, ic);
     write(`${entry.code}/icon${suffix}.png`, png(ic, 64));
-    const wide = badgeWide(entry, mono);
-    sizes[entry.code] = { wide: [wide.w, 31], medium: [MEDIUM_W, 31], compact: [100, 19] };
-    const badges = [["wide", wide.svg, wide.w], ["medium", badgeMedium(entry, mono), MEDIUM_W], ["compact", badgeCompact(entry, mono), 100]];
-    for (const [name, s, w] of badges) {
-      write(`${entry.code}/${name}${suffix}.svg`, s);
-      write(`${entry.code}/${name}${suffix}.png`, png(s, w));
-      write(`${entry.code}/${name}${suffix}@2x.png`, png(s, w * 2));
+    const badges = [
+      ["wide", splitBadge(entry, mono, "medium", true)],
+      ["medium", splitBadge(entry, mono, "medium", false)],
+      ["compact", splitBadge(entry, mono, "compact", false)],
+    ];
+    if (!mono) sizes[entry.code] = Object.fromEntries(badges.map(([name, b]) => [name, [b.w, b.h]]));
+    for (const [name, b] of badges) {
+      write(`${entry.code}/${name}${suffix}.svg`, b.svg);
+      write(`${entry.code}/${name}${suffix}.png`, png(b.svg, b.w));
+      write(`${entry.code}/${name}${suffix}@2x.png`, png(b.svg, b.w * 2));
     }
   }
 }
