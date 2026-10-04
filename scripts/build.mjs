@@ -85,22 +85,26 @@ function frame(w, h, rx, mono) {
 
 const icon = (entry, mono) => svg(21, 21, grid(entry, mono, 0, 0, 6, 1.5), entry);
 
-function badge88(entry, mono) {
-  return svg(88, 31,
-    frame(88, 31, 3, mono) +
+// Medium badge: one width for every label, wide enough for the longest name
+const MEDIUM_NAME_SIZE = 12.5;
+const MEDIUM_W = Math.ceil(31 + Math.max(...spec.codes.map((e) => layout(fonts[600], e.name, MEDIUM_NAME_SIZE).width)) + 6);
+
+function badgeMedium(entry, mono) {
+  return svg(MEDIUM_W, 31,
+    frame(MEDIUM_W, 31, 3, mono) +
     grid(entry, mono, 5, 5, 6, 1.5) +
-    text(`AIA ${entry.code}`, { x: 31, y: 13, size: 7.5, weight: 500, fill: INK_MUTED }) +
-    text(entry.name, { x: 31, y: 24, size: 10, weight: 600, fill: INK, maxWidth: 53 }),
+    text(`AIA ${entry.code}`, { x: 31, y: 12.5, size: 9.4, weight: 500, fill: INK_MUTED }) +
+    text(entry.name, { x: 31, y: 25, size: MEDIUM_NAME_SIZE, weight: 600, fill: INK }),
     entry);
 }
 
 // Too small for the name to be legible, so the compact badge shows the code only
-function badge80(entry, mono) {
-  return svg(80, 15,
-    frame(80, 15, 2, mono) +
-    grid(entry, mono, 3, 2, 3, 1) +
-    text("AIA", { x: 45, y: 10.5, size: 8, weight: 500, fill: INK_MUTED, anchor: "end" }) +
-    text(entry.code, { x: 48, y: 10.5, size: 8, weight: 600, fill: INK }),
+function badgeCompact(entry, mono) {
+  return svg(100, 19,
+    frame(100, 19, 2.5, mono) +
+    grid(entry, mono, 4, 2.5, 4, 1) +
+    text("AIA", { x: 57, y: 13.4, size: 10, weight: 500, fill: INK_MUTED, anchor: "end" }) +
+    text(entry.code, { x: 60.5, y: 13.4, size: 10, weight: 600, fill: INK }),
     entry);
 }
 
@@ -108,15 +112,15 @@ function badge80(entry, mono) {
 // Width depends on the label's text, so it's returned alongside the SVG.
 function badgeWide(entry, mono) {
   const lead = `AIA ${entry.code} · ${entry.name}.`;
-  const size = 10, x = 31, gap = 4, padRight = 9;
+  const size = 12.5, x = 31, gap = 5, padRight = 10;
   const leadW = layout(fonts[600], lead, size).width;
   const summaryW = layout(fonts[400], entry.summary, size).width;
   const w = Math.ceil(x + leadW + gap + summaryW + padRight);
   const out = svg(w, 31,
     frame(w, 31, 3, mono) +
     grid(entry, mono, 5, 5, 6, 1.5) +
-    text(lead, { x, y: 19.5, size, weight: 600, fill: INK }) +
-    text(entry.summary, { x: x + leadW + gap, y: 19.5, size, weight: 400, fill: INK_MUTED }),
+    text(lead, { x, y: 20, size, weight: 600, fill: INK }) +
+    text(entry.summary, { x: x + leadW + gap, y: 20, size, weight: 400, fill: INK_MUTED }),
     entry);
   return { svg: out, w };
 }
@@ -195,8 +199,8 @@ for (const entry of spec.codes) {
     write(`${entry.code}/icon${suffix}.svg`, ic);
     write(`${entry.code}/icon${suffix}.png`, png(ic, 64));
     const wide = badgeWide(entry, mono);
-    sizes[entry.code] = { wide: [wide.w, 31] };
-    const badges = [["88x31", badge88(entry, mono), 88], ["80x15", badge80(entry, mono), 80], ["wide", wide.svg, wide.w]];
+    sizes[entry.code] = { wide: [wide.w, 31], medium: [MEDIUM_W, 31], compact: [100, 19] };
+    const badges = [["wide", wide.svg, wide.w], ["medium", badgeMedium(entry, mono), MEDIUM_W], ["compact", badgeCompact(entry, mono), 100]];
     for (const [name, s, w] of badges) {
       write(`${entry.code}/${name}${suffix}.svg`, s);
       write(`${entry.code}/${name}${suffix}.png`, png(s, w));
@@ -211,7 +215,7 @@ write("chart.png", png(chartSvg, 1600));
 // Fixed timestamp so the zip only changes when its contents do
 writeFileSync(join(outDir, `aia-badges-${spec.version}.zip`), zipSync(zipFiles, { mtime: "2026-10-04T00:00:00Z" }));
 
-// Badge sizes that depend on text (full-width badges), so sites can give snippets an exact width/height
+// Every badge size, so sites can give snippets an exact width/height
 writeFileSync(join(outDir, "sizes.json"), JSON.stringify(sizes, null, 2) + "\n");
 
 console.log(`Wrote ${Object.keys(zipFiles).length} files and a zip to ${outDir}`);
