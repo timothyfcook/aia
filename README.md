@@ -13,7 +13,7 @@ AIA is an attribution system for writing that helps readers understand a writer'
 Each label has two scores from 1 to 3, ideas first and words second. On both scales, 1 is original, 2 is some AI, and 3 is mostly AI.
 
 | Badge | Meaning |
-|---|---|
+|:---|:---|
 | <img src="assets/v1/1x1/medium.svg" width="97" height="31" alt="AIA 1x1 · No AI"> | A person's own ideas and writing. Spellcheck is allowed. |
 | <img src="assets/v1/1x2/medium.svg" width="97" height="31" alt="AIA 1x2 · Polished"> | The ideas and the draft were human, but AI did copyedits and redrafting. |
 | <img src="assets/v1/1x3/medium.svg" width="97" height="31" alt="AIA 1x3 · Proxied"> | The argument, prompts, and outline are human, but most of the writing is done by AI. |
@@ -31,7 +31,7 @@ The full definitions live in [`spec.json`](spec.json), which is the source of tr
 Each label comes as a full-width badge, a medium badge, a compact badge and an icon, in color and one color.
 
 **Full width**<br>
-<img src="assets/v1/1x2/wide.svg" width="340" height="31" alt="AIA 1x2 · Polished: original ideas, some AI writing">
+<img src="assets/v1/1x2/wide.svg" width="415" height="31" alt="AIA 1x2 · Polished: original ideas, some AI writing">
 
 **Medium (97×31)**<br>
 <img src="assets/v1/1x2/medium.svg" width="97" height="31" alt="AIA 1x2 · Polished: original ideas, some AI writing">
