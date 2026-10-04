@@ -19,7 +19,7 @@ Each label has two scores from 1 to 3, ideas first and words second. On both sca
 | <img src="assets/v1/1x3/medium.svg" width="97" height="31" alt="AIA 1x3 · Proxied"> | The argument, prompts, and outline are human, but most of the writing is done by AI. |
 | <img src="assets/v1/2x1/medium.svg" width="97" height="31" alt="AIA 2x1 · Informed"> | The thinking was developed with AI through research, brainstorming or debate, but a person wrote every word. |
 | <img src="assets/v1/2x2/medium.svg" width="97" height="31" alt="AIA 2x2 · Paired"> | A person collaborated with AI on both the ideas and writing. |
-| <img src="assets/v1/2x3/medium.svg" width="97" height="31" alt="AIA 2x3 · Directed"> | The ideas were shaped together and AI wrote the text, with a person steering and editing. |
+| <img src="assets/v1/2x3/medium.svg" width="97" height="31" alt="AIA 2x3 · Directed"> | Ideas shaped together, with AI writing most text under direction. |
 | <img src="assets/v1/3x1/medium.svg" width="97" height="31" alt="AIA 3x1 · Borrowed"> | The ideas largely came from AI, and a person wrote them up in their own words. |
 | <img src="assets/v1/3x2/medium.svg" width="97" height="31" alt="AIA 3x2 · Curated"> | AI came up with the ideas and first draft. A person cut and reworked it. |
 | <img src="assets/v1/3x3/medium.svg" width="97" height="31" alt="AIA 3x3 · Slop"> | Vibe writing. A person provided a minimal prompt and the AI did the rest. |
