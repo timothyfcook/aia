@@ -112,15 +112,15 @@ function badgeCompact(entry, mono) {
 // Width depends on the label's text, so it's returned alongside the SVG.
 function badgeWide(entry, mono) {
   const lead = `AIA ${entry.code} · ${entry.name}.`;
-  const size = 12.5, x = 31, gap = 5, padRight = 10;
+  const size = 15.6, x = 31, gap = 6, padRight = 11;
   const leadW = layout(fonts[600], lead, size).width;
   const summaryW = layout(fonts[400], entry.summary, size).width;
   const w = Math.ceil(x + leadW + gap + summaryW + padRight);
   const out = svg(w, 31,
     frame(w, 31, 3, mono) +
     grid(entry, mono, 5, 5, 6, 1.5) +
-    text(lead, { x, y: 20, size, weight: 600, fill: INK }) +
-    text(entry.summary, { x: x + leadW + gap, y: 20, size, weight: 400, fill: INK_MUTED }),
+    text(lead, { x, y: 21.2, size, weight: 600, fill: INK }) +
+    text(entry.summary, { x: x + leadW + gap, y: 21.2, size, weight: 400, fill: INK_MUTED }),
     entry);
   return { svg: out, w };
 }
