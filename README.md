@@ -59,6 +59,25 @@ Files are served from `https://timothyfcook.com/aia/v1/<code>/<file>`:
 
 Add `-mono` before the extension for the one-color version (e.g. `medium-mono.svg`). Exact sizes for every label are in [`sizes.json`](assets/v1/sizes.json). The chart comes in two styles, [`chart.png`](assets/v1/chart.png) (grid) and [`chart-icons.png`](assets/v1/chart-icons.png) (each label's icon), also as SVG. Everything is also in [`aia-labels-v1.zip`](assets/v1/aia-labels-v1.zip).
 
+## Slack emoji
+
+Each label is also a Slack emoji: a tile in the label's color with a white grid, the label's own cell solid. Files are 128×128 PNGs in [`assets/v1/slack/`](assets/v1/slack/), named as the emoji so bulk-upload tools pick the name up from the filename. [`aia-slack-emoji-v1.zip`](assets/v1/slack/aia-slack-emoji-v1.zip) has all ten; [`emoji.json`](assets/v1/slack/emoji.json) lists names and aliases.
+
+| Emoji | Alias | Label |
+|:---|:---|:---|
+| `:aia:` | | AIA mark |
+| `:aia-1x1:` | `:aia-no-ai:` | No AI |
+| `:aia-1x2:` | `:aia-polished:` | Polished |
+| `:aia-1x3:` | `:aia-proxied:` | Proxied |
+| `:aia-2x1:` | `:aia-informed:` | Informed |
+| `:aia-2x2:` | `:aia-paired:` | Paired |
+| `:aia-2x3:` | `:aia-directed:` | Directed |
+| `:aia-3x1:` | `:aia-borrowed:` | Borrowed |
+| `:aia-3x2:` | `:aia-curated:` | Curated |
+| `:aia-3x3:` | `:aia-slop:` | Slop |
+
+Pale label colors are deepened toward the label's dark color so the white cell reads at Slack's 22px inline and 16px reaction sizes, so the tiles are a shade deeper than the matching labels.
+
 ## Versioning
 
 Published files never change. Pages around the web link to `https://timothyfcook.com/aia/v1/...`, so editing a v1 file would silently change every page that uses it. Changes to names, definitions or the design go into a new version (`v2`) with its own folder and URLs.
