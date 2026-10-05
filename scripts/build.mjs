@@ -160,6 +160,46 @@ function splitBadge(entry, mono, size, withSummary) {
   return { svg: out, w, h };
 }
 
+// ─── Slack emoji ──────────────────────────────────────────────────────────────
+// A rounded tile in the label's color with a white grid: the label's own cell solid, the others translucent.
+// Slack shows emoji at 22px inline and 16px in reactions, so the tile does the first job (which band) and the
+// white cell the second (which label). Pale badge colors are blended toward the label's dark color until white
+// reaches 2.6:1 on them; translucent cells are more opaque on lighter tiles so they stay visible.
+const EMOJI = { size: 128, radius: 28, pad: 20, cell: 24, gap: 8, contrast: 2.6 };
+const EMOJI_MARK_TILE = "#3D3D3A";
+
+const mixHex = (a, b, t) => {
+  const [p, q] = [a, b].map((h) => { const n = parseInt(h.slice(1), 16); return [n >> 16, (n >> 8) & 255, n & 255]; });
+  return "#" + p.map((v, i) => Math.round(v + (q[i] - v) * t).toString(16).padStart(2, "0")).join("");
+};
+
+function emojiTile(entry) {
+  let t = 0, tile = entry.color;
+  while (contrast(tile, WHITE) < EMOJI.contrast && t < 1) { t += 0.02; tile = mixHex(entry.color, entry.dark, t); }
+  const faint = +Math.min(0.6, Math.max(0.32, 0.78 - contrast(tile, WHITE) * 0.09)).toFixed(2);
+  return { tile, faint };
+}
+
+// entry = null draws the generic AIA mark: every cell solid white on a neutral tile
+function emoji(entry) {
+  const { size, radius, pad, cell, gap } = EMOJI;
+  const { tile, faint } = entry ? emojiTile(entry) : { tile: EMOJI_MARK_TILE, faint: 1 };
+  const [ideas, words] = entry ? entry.code.split("x").map(Number) : [0, 0];
+  let body = `<rect width="${size}" height="${size}" rx="${radius}" fill="${tile}"/>`;
+  for (let r = 1; r <= 3; r++) {
+    for (let c = 1; c <= 3; c++) {
+      const own = r === ideas && c === words;
+      body += `<rect x="${pad + (c - 1) * (cell + gap)}" y="${pad + (r - 1) * (cell + gap)}" width="${cell}" height="${cell}" rx="${+(cell * 0.18).toFixed(2)}" fill="${WHITE}"${own || faint === 1 ? "" : ` fill-opacity="${faint}"`}/>`;
+    }
+  }
+  const title = entry ? label(entry) : `${spec.name} mark`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" role="img" aria-label="${title}"><title>${title}</title>${body}</svg>\n`;
+}
+
+// Slack emoji names: lowercase letters, digits, hyphens. The code is the name; the label's name is an alias.
+const emojiName = (entry) => `aia-${entry.code}`;
+const emojiAlias = (entry) => `aia-${entry.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+
 // ─── Charts ───────────────────────────────────────────────────────────────────
 // The ideas × words chart, in two styles on the cream background of the project's icons:
 // "grid" (nine tinted squares with names, used in the essay) and "icons" (each label's icon and name).
@@ -236,6 +276,22 @@ for (const entry of spec.codes) {
     }
   }
 }
+// Slack emoji: one PNG per label named as the emoji, plus the generic mark, a manifest and a zip for bulk upload
+const emojiZip = {};
+const manifest = [];
+// Written outside `write` so the labels zip, a published v1 file, stays byte-for-byte the same
+mkdirSync(join(outDir, "slack"), { recursive: true });
+const writeEmoji = (name, svgStr, aliases, entry) => {
+  const data = png(svgStr, EMOJI.size);
+  writeFileSync(join(outDir, "slack", `${name}.svg`), svgStr);
+  writeFileSync(join(outDir, "slack", `${name}.png`), data);
+  emojiZip[`${name}.png`] = data;
+  manifest.push({ name, aliases, file: `slack/${name}.png`, ...(entry ? { code: entry.code, label: entry.name } : { label: `${spec.name} mark` }) });
+};
+writeEmoji("aia", emoji(null), [], null);
+for (const entry of spec.codes) writeEmoji(emojiName(entry), emoji(entry), [emojiAlias(entry)], entry);
+writeFileSync(join(outDir, "slack", "emoji.json"), JSON.stringify(manifest, null, 2) + "\n");
+writeFileSync(join(outDir, "slack", `aia-slack-emoji-${spec.version}.zip`), zipSync(emojiZip, { mtime: "2026-10-04T00:00:00Z" }));
 write("spec.json", JSON.stringify(spec, null, 2) + "\n");
 for (const [name, chartFn] of [["chart", gridChart], ["chart-icons", iconsChart]]) {
   const svgStr = chartFn();

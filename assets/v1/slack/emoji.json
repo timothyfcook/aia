@@ -1,0 +1,89 @@
+[
+  {
+    "name": "aia",
+    "aliases": [],
+    "file": "slack/aia.png",
+    "label": "AI Attribution (AIA) mark"
+  },
+  {
+    "name": "aia-1x1",
+    "aliases": [
+      "aia-no-ai"
+    ],
+    "file": "slack/aia-1x1.png",
+    "code": "1x1",
+    "label": "No AI"
+  },
+  {
+    "name": "aia-1x2",
+    "aliases": [
+      "aia-polished"
+    ],
+    "file": "slack/aia-1x2.png",
+    "code": "1x2",
+    "label": "Polished"
+  },
+  {
+    "name": "aia-1x3",
+    "aliases": [
+      "aia-proxied"
+    ],
+    "file": "slack/aia-1x3.png",
+    "code": "1x3",
+    "label": "Proxied"
+  },
+  {
+    "name": "aia-2x1",
+    "aliases": [
+      "aia-informed"
+    ],
+    "file": "slack/aia-2x1.png",
+    "code": "2x1",
+    "label": "Informed"
+  },
+  {
+    "name": "aia-2x2",
+    "aliases": [
+      "aia-paired"
+    ],
+    "file": "slack/aia-2x2.png",
+    "code": "2x2",
+    "label": "Paired"
+  },
+  {
+    "name": "aia-2x3",
+    "aliases": [
+      "aia-directed"
+    ],
+    "file": "slack/aia-2x3.png",
+    "code": "2x3",
+    "label": "Directed"
+  },
+  {
+    "name": "aia-3x1",
+    "aliases": [
+      "aia-borrowed"
+    ],
+    "file": "slack/aia-3x1.png",
+    "code": "3x1",
+    "label": "Borrowed"
+  },
+  {
+    "name": "aia-3x2",
+    "aliases": [
+      "aia-curated"
+    ],
+    "file": "slack/aia-3x2.png",
+    "code": "3x2",
+    "label": "Curated"
+  },
+  {
+    "name": "aia-3x3",
+    "aliases": [
+      "aia-slop"
+    ],
+    "file": "slack/aia-3x3.png",
+    "code": "3x3",
+    "label": "Slop"
+  }
+]
