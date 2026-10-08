@@ -59,6 +59,10 @@ Files are served from `https://timothyfcook.com/aia/v1/<code>/<file>`:
 
 Add `-mono` before the extension for the one-color version (e.g. `medium-mono.svg`). Exact sizes for every label are in [`sizes.json`](assets/v1/sizes.json). The chart comes in two styles, [`chart.png`](assets/v1/chart.png) (grid) and [`chart-icons.png`](assets/v1/chart-icons.png) (each label's icon), also as SVG. Everything is also in [`aia-labels-v1.zip`](assets/v1/aia-labels-v1.zip).
 
+## Website
+
+The AIA website is a small static page in [`site/`](site/), deployed with Netlify ([`netlify.toml`](netlify.toml)). Its build copies `assets/v1/` into the site, so it always shows the current labels. To preview it locally, run `npm run build:site` and serve the `site/` folder.
+
 ## Versioning
 
 Published files never change. Pages around the web link to `https://timothyfcook.com/aia/v1/...`, so editing a v1 file would silently change every page that uses it. Changes to names, definitions or the design go into a new version (`v2`) with its own folder and URLs.
