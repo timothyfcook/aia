@@ -120,6 +120,16 @@ async function init() {
     });
   }
 
+  // Motto band: each label's row from its grid (tints, with its own square solid), repeated across the page
+  const mosaic = document.getElementById("mosaic");
+  if (mosaic) {
+    const cells = spec.codes.flatMap((e) => {
+      const words = Number(e.code.split("x")[1]);
+      return [1, 2, 3].map((c) => (c === words ? e.dark : e.tint));
+    });
+    mosaic.innerHTML = Array.from({ length: 160 }, (_, i) => `<i style="background:${cells[i % cells.length]}"></i>`).join("");
+  }
+
   const chosen = document.getElementById("chosen");
   if (chosen) {
     chosen.innerHTML = spec.codes
