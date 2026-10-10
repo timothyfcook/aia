@@ -2,9 +2,7 @@
 
 AIA is an attribution system for writing that helps readers understand a writer's intent. It works on two axes, ideas and words, to show how much of a piece came from AI and how much from a person. The goal is to give us all an honest framework for how much attention our writing deserves.
 
-**Website:** [AIAlabels.com](https://aialabels.com)
-
-**Get a label for your writing:** [timothyfcook.com/aia](https://timothyfcook.com/aia)
+**Website and label maker:** [AIAlabels.com](https://aialabels.com)
 
 **Read the reasoning:** [AI Attribution (AIA): Labels for AI Writing](https://timothyfcook.com/writing/2026/is-this-worth-my-attention)
 
@@ -42,15 +40,15 @@ Each label comes in full-width, medium and compact sizes, plus an icon, in color
 <img src="assets/v1/1x2/compact.svg" width="129" height="19" alt="AIA 1x2 · Polished: original ideas, some AI writing">
 
 **Text line**<br>
-<img src="assets/v1/1x2/icon.svg" width="16" height="16" alt=""> **[AIA 1x2 · Polished.](https://timothyfcook.com/aia/1x2)** Original ideas, some AI writing.
+<img src="assets/v1/1x2/icon.svg" width="16" height="16" alt=""> **[AIA 1x2 · Polished.](https://aialabels.com/1x2)** Original ideas, some AI writing.
 
-The easiest way to add one is the chooser at [timothyfcook.com/aia](https://timothyfcook.com/aia), which gives you copy-paste Markdown, HTML and plain text. For example, in Markdown:
+The easiest way to add one is the label maker at [AIAlabels.com](https://aialabels.com), which gives you copy-paste Markdown. For HTML, other sizes and plain text, use the [full label maker](https://timothyfcook.com/aia). For example, in Markdown:
 
 ```markdown
-[![AIA 1x2 · Polished: original ideas, some AI writing](https://timothyfcook.com/aia/v1/1x2/wide.svg)](https://timothyfcook.com/aia/1x2)
+[![AIA 1x2 · Polished: original ideas, some AI writing](https://aialabels.com/v1/1x2/wide.svg)](https://aialabels.com/1x2)
 ```
 
-Files are served from `https://timothyfcook.com/aia/v1/<code>/<file>`:
+Files are served from `https://aialabels.com/v1/<code>/<file>`, and each label has a page at `https://aialabels.com/<code>` (e.g. [aialabels.com/1x2](https://aialabels.com/1x2)):
 
 | File | What it is |
 |---|---|
@@ -63,11 +61,11 @@ Add `-mono` before the extension for the one-color version (e.g. `medium-mono.sv
 
 ## Website
 
-The AIA website, [AIAlabels.com](https://aialabels.com), is a small static page in [`site/`](site/), deployed with Netlify ([`netlify.toml`](netlify.toml)). Its build copies `assets/v1/` into the site, so it always shows the current labels. To preview it locally, run `npm run build:site` and serve the `site/` folder.
+The AIA website, [AIAlabels.com](https://aialabels.com), is a small static site in [`site/`](site/), deployed with Netlify ([`netlify.toml`](netlify.toml)). Its build (`scripts/build-site.mjs`) copies `assets/v1/` into the site and writes a page for each label from [`templates/label.html`](templates/label.html), so it always matches the spec. To preview it locally, run `npm run build:site` and serve the `site/` folder.
 
 ## Versioning
 
-Published files never change. Pages around the web link to `https://timothyfcook.com/aia/v1/...`, so editing a v1 file would silently change every page that uses it. Changes to names, definitions or the design go into a new version (`v2`) with its own folder and URLs.
+Published files never change. Pages around the web link to `https://aialabels.com/v1/...` (and, for early labels, `https://timothyfcook.com/aia/v1/...`), so editing a v1 file would silently change every page that uses it. Changes to names, definitions or the design go into a new version (`v2`) with its own folder and URLs.
 
 ## Contributing
 

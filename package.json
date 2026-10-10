@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "build:site": "rm -rf site/v1 && cp -R assets/v1 site/v1"
+    "build:site": "node scripts/build-site.mjs"
   },
   "devDependencies": {
     "@fontsource/inter": "^5.3.0",

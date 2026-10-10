@@ -46,7 +46,12 @@ h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 72px 0 
 .options button[aria-pressed="true"] { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
 .options button:not([aria-pressed="true"]) { color: var(--muted); }
 
-.chosen { margin: 28px 0 14px; color: var(--muted); }
+/* Every description sits in the same grid cell; only the chosen one is visible, so the
+   block is always as tall as the longest description and the preview below doesn't jump */
+.chosen { display: grid; margin: 28px 0 14px; color: var(--muted); }
+.chosen > p { grid-area: 1 / 1; visibility: hidden; }
+.chosen > p.on { visibility: visible; }
+.chosen a { text-decoration: none; }
 .chosen strong { color: var(--ink); }
 
 .preview {
@@ -75,8 +80,22 @@ h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 72px 0 
 .labels li { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 20px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
 .labels li:last-child { border-bottom: 1px solid var(--line); }
 .labels img { display: block; }
+.labels li[aria-current="page"] p { color: var(--ink); font-weight: 600; }
 .labels p { font-size: 15px; color: var(--muted); }
 @media (max-width: 520px) { .labels li { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+
+/* Label pages */
+.back { display: inline-block; margin-bottom: 32px; font-size: 14px; font-weight: 600; text-decoration: none; }
+.label-header { display: flex; align-items: center; gap: 24px; }
+.label-header img { flex-shrink: 0; }
+.label-header h1 { margin-bottom: 4px; }
+.description { margin-top: 32px; font-size: 20px; line-height: 1.5; }
+.scores { display: flex; flex-wrap: wrap; gap: 8px 32px; margin-top: 16px; color: var(--muted); }
+.scores dt { display: inline; font-weight: 600; color: var(--ink); }
+.scores dt::after { content: ": "; }
+.scores dd { display: inline; }
+section .intro { margin-bottom: 16px; font-size: 15px; }
+@media (max-width: 520px) { .label-header { flex-direction: column; align-items: flex-start; gap: 16px; } .label-header img { width: 72px; height: 72px; } }
 
 /* Downloads */
 .downloads { display: flex; flex-wrap: wrap; gap: 10px; }
