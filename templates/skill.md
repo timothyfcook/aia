@@ -56,11 +56,11 @@ maker: https://aialabels.com. Essay: https://timothyfcook.com/writing/2026/is-th
 - **State the code and a one-line reason before drafting.** Re-assess at the end;
   if the author rewrote most of it, or the mix changed during editing, update the
   label.
-- **Re-assess after every edit the author makes.** Whenever the author edits the
-  document after it's labeled, by hand or by asking for changes, re-assess both
-  axes before your next change and update the label if the mix changed. Their own
-  rewrites usually lower the words score (a draft they rewrote line by line is a
-  2, not a 3), and ideas they added or cut can move the ideas score either way.
+- **Re-assess before publishing.** Before the document is finally published or
+  shared, re-assess both axes, especially if the author edited it after it was
+  labeled, and update the label if the mix changed. Their own rewrites usually
+  lower the words score (a draft they rewrote line by line is a 2, not a 3), and
+  ideas they added or cut can move the ideas score either way.
 - **3x3 is legitimate** for machine-facing or throwaway text. If a 3x3 document is
   headed to other people, say so plainly and suggest a human pass before
   publishing.
@@ -135,4 +135,4 @@ one element at the top of the page body:
 2. Code reflects what actually happened, with a one-line reason stated.
 3. Format matches the destination (badge, text line, HTML, or storage format).
 4. Name, summary, and description match the table exactly for that code.
-5. After any edit by the author, the label was re-assessed and still matches.
+5. Before publishing, the label was re-assessed and still matches.
