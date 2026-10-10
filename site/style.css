@@ -73,7 +73,25 @@ h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 72px 0 
   padding: 6px 14px; font: 600 13px inherit; font-family: inherit;
   color: var(--surface); background: var(--ink); border: none; border-radius: 6px; cursor: pointer;
 }
-.more { margin-top: 12px; font-size: 14px; color: var(--muted); }
+.preview .text-line { color: var(--muted); }
+.preview .text-line img { vertical-align: -3px; margin-right: 4px; }
+.preview .text-line strong { color: var(--ink); }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 16px; border-bottom: 1px solid var(--line); }
+.tabs button {
+  padding: 8px 12px; margin-bottom: -1px;
+  font: inherit; font-size: 14px; color: var(--muted);
+  background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer;
+}
+.tabs button[aria-selected="true"] { color: var(--ink); font-weight: 600; border-bottom-color: var(--ink); }
+
+.tweaks { display: flex; flex-wrap: wrap; gap: 20px 32px; margin-top: 24px; }
+.choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.choices button {
+  padding: 6px 12px; font: inherit; font-size: 14px; font-weight: 600; color: var(--muted);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 6px; cursor: pointer;
+}
+.choices button[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
 
 /* Labels list */
 .labels { list-style: none; }

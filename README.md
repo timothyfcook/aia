@@ -42,7 +42,7 @@ Each label comes in full-width, medium and compact sizes, plus an icon, in color
 **Text line**<br>
 <img src="assets/v1/1x2/icon.svg" width="16" height="16" alt=""> **[AIA 1x2 · Polished.](https://aialabels.com/1x2)** Original ideas, some AI writing.
 
-The easiest way to add one is the label maker at [AIAlabels.com](https://aialabels.com), which gives you copy-paste Markdown. For HTML, other sizes and plain text, use the [full label maker](https://timothyfcook.com/aia). For example, in Markdown:
+The easiest way to add one is the label maker at [AIAlabels.com](https://aialabels.com), which gives you copy-paste Markdown, HTML, plain text and page-head markup in every size and style. For example, in Markdown:
 
 ```markdown
 [![AIA 1x2 · Polished: original ideas, some AI writing](https://aialabels.com/v1/1x2/wide.svg)](https://aialabels.com/1x2)
