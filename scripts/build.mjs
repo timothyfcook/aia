@@ -204,6 +204,55 @@ function iconsChart() {
   return chartSvg(body, "icons");
 }
 
+// ─── Link preview images ──────────────────────────────────────────────────────
+// 1200×630 cards shown when a page is shared on X, Slack, LinkedIn, iMessage, etc.
+// Not part of the zip; they're for the website's pages, not for labeling writing.
+const SHARE = { w: 1200, h: 630, pad: 80 };
+
+// Breaks text into lines that fit maxWidth at the given size
+function wrap(str, weight, size, maxWidth) {
+  const lines = [];
+  let line = "";
+  for (const word of str.split(" ")) {
+    const next = line ? `${line} ${word}` : word;
+    if (line && layout(fonts[weight], next, size).width > maxWidth) { lines.push(line); line = word; } else line = next;
+  }
+  return line ? [...lines, line] : lines;
+}
+
+const shareSvg = (body, title) =>
+  `<svg xmlns="http://www.w3.org/2000/svg" width="${SHARE.w}" height="${SHARE.h}" viewBox="0 0 ${SHARE.w} ${SHARE.h}" role="img" aria-label="${title}"><title>${title}</title><rect width="${SHARE.w}" height="${SHARE.h}" fill="${CHART.bg}"/>${body}</svg>\n`;
+
+const footer = (str = `${spec.name} · aialabels.com`) =>
+  text(str, { x: SHARE.pad, y: SHARE.h - 64, size: 26, weight: 500, fill: CHART.muted });
+
+// One label: its icon large, code and name, then the description
+function labelShare(entry) {
+  const { pad } = SHARE;
+  let body = grid(entry, false, pad, 120, 56, 9);
+  body += text(`AIA ${entry.code}`, { x: 330, y: 172, size: 36, weight: 500, fill: CHART.muted });
+  body += text(entry.name, { x: 328, y: 250, size: 76, weight: 700, fill: CHART.ink });
+  wrap(entry.description, 400, 36, SHARE.w - pad * 2).slice(0, 3).forEach((line, i) => {
+    body += text(line, { x: pad, y: 380 + i * 50, size: 36, weight: 400, fill: CHART.ink });
+  });
+  return shareSvg(body + footer(), `AIA ${entry.code} · ${entry.name}`);
+}
+
+// The site: title and one-line description beside all nine icons, as in the project thumbnail
+function siteShare() {
+  const { pad } = SHARE;
+  let body = text(spec.name, { x: pad, y: 190, size: 60, weight: 700, fill: CHART.ink });
+  const blurb = "An attribution system for writing that indicates the level of AI vs. human contribution.";
+  wrap(blurb, 400, 32, 560).forEach((line, i) => {
+    body += text(line, { x: pad, y: 262 + i * 46, size: 32, weight: 400, fill: CHART.muted });
+  });
+  for (const entry of spec.codes) {
+    const [r, c] = entry.code.split("x").map(Number);
+    body += grid(entry, false, 760 + (c - 1) * 116, 120 + (r - 1) * 116, 30, 5);
+  }
+  return shareSvg(body + footer("aialabels.com"), spec.name);
+}
+
 const png = (svgStr, width) => new Resvg(svgStr, { fitTo: { mode: "width", value: width } }).render().asPng();
 
 // ─── Build ────────────────────────────────────────────────────────────────────
@@ -243,6 +292,10 @@ for (const [name, chartFn] of [["chart", gridChart], ["chart-icons", iconsChart]
   write(`${name}.png`, png(svgStr, CHART.w));
 }
 // Fixed timestamp so the zip only changes when its contents do
+// Link preview images (written outside write() so they stay out of the zip)
+writeFileSync(join(outDir, "share.png"), png(siteShare(), SHARE.w));
+for (const entry of spec.codes) writeFileSync(join(outDir, entry.code, "share.png"), png(labelShare(entry), SHARE.w));
+
 writeFileSync(join(outDir, `aia-labels-${spec.version}.zip`), zipSync(zipFiles, { mtime: "2026-10-04T00:00:00Z" }));
 
 // Every badge size, so sites can give snippets an exact width/height
