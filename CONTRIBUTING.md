@@ -12,7 +12,7 @@ For anything bigger than a small fix, please open an issue before a pull request
 
 ## The one rule: released files never change
 
-Labels are hotlinked from `https://timothyfcook.com/aia/v1/...` on other people's sites. Editing anything in `assets/v1/`, or anything in `spec.json` that changes those files, would silently change every page that uses them.
+Labels are hotlinked from `https://aialabels.com/v1/...` (and, for early labels, `https://timothyfcook.com/aia/v1/...`) on other people's sites. Editing anything in `assets/v1/`, or anything in `spec.json` that changes those files, would silently change every page that uses them.
 
 Accepted changes to names, definitions or the design are collected for the next version (`v2`), which gets its own folder and URLs. Fixes that leave the published files byte-for-byte identical, like docs or the generator's internals, can land any time.
 

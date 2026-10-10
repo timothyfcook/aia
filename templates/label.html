@@ -1,0 +1,64 @@
+<!doctype html>
+<!-- Template for the label pages (/1x1 … /3x3). scripts/build-site.mjs fills in the {{…}} fields from spec.json. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIA {{code}} · {{name}} — AI Attribution</title>
+  <meta name="description" content="{{description}}">
+  <meta property="og:title" content="AIA {{code}} · {{name}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:url" content="https://aialabels.com/{{code}}">
+  <meta property="og:image" content="https://aialabels.com/v1/chart.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://aialabels.com/{{code}}">
+  <link rel="icon" href="/v1/{{code}}/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body data-code="{{code}}">
+  <main>
+    <a class="back" href="/">← All labels</a>
+    <header class="label-header">
+      <img src="/v1/{{code}}/icon.svg" width="96" height="96" alt="">
+      <div>
+        <h1>AIA {{code}} · {{name}}</h1>
+        <p class="intro">{{summary}}</p>
+      </div>
+    </header>
+
+    <p class="description">{{description}}</p>
+    <dl class="scores">
+      <div><dt>Ideas</dt><dd>{{ideas}}</dd></div>
+      <div><dt>Words</dt><dd>{{words}}</dd></div>
+    </dl>
+
+    <section aria-labelledby="use-heading">
+      <h2 id="use-heading">Use this label</h2>
+      <div id="maker"></div>
+    </section>
+
+    <section aria-labelledby="labels-heading">
+      <h2 id="labels-heading">All labels</h2>
+      <p class="intro">
+        AI Attribution (AIA) scores the ideas and the words separately, from 1 (original) to 3 (mostly AI). Read
+        <a href="https://timothyfcook.com/writing/2026/is-this-worth-my-attention">the post</a> for details.
+      </p>
+      <ul class="labels" id="labels"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><img src="https://licensebuttons.net/l/by/4.0/88x31.png" width="88" height="31" alt="CC BY 4.0"></a>
+    <p>
+      AIA v1 is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Use and adapt it
+      freely with credit; a label linked to its page counts as credit. Suggestions and issues are welcome
+      <a href="https://github.com/timothyfcook/aia">on GitHub</a>.
+    </p>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

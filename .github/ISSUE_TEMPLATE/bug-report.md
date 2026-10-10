@@ -6,7 +6,7 @@ labels: bug
 ---
 
 **Which file or snippet?**
-e.g. https://timothyfcook.com/aia/v1/1x2/medium.svg, or the Markdown snippet for 2x3
+e.g. https://aialabels.com/v1/1x2/medium.svg, or the Markdown snippet for 2x3
 
 **What happens?**
 

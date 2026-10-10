@@ -11,11 +11,11 @@
   <meta property="og:image" content="https://aialabels.com/v1/chart.png">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://aialabels.com/">
-  <link rel="icon" href="v1/1x1/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="/v1/1x1/icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <main>
@@ -31,7 +31,7 @@
     </header>
 
     <div class="chart-frame">
-      <img class="chart" src="v1/chart.svg" width="1600" height="1110" alt="AI Attribution (AIA) chart: ideas × words, with the nine labels from No AI to Slop">
+      <img class="chart" src="/v1/chart.svg" width="1600" height="1110" alt="AI Attribution (AIA) chart: ideas × words, with the nine labels from No AI to Slop">
     </div>
 
     <section aria-labelledby="label-heading">
@@ -46,13 +46,8 @@
           <div class="options" data-axis="words"></div>
         </div>
       </div>
-      <p class="chosen" id="chosen"></p>
-      <div class="preview"><img id="preview" alt=""></div>
-      <div class="snippet">
-        <pre id="snippet"></pre>
-        <button type="button" id="copy">Copy</button>
-      </div>
-      <p class="more">Markdown shown. For HTML, other sizes and plain text, use the <a href="https://timothyfcook.com/aia">full label maker</a>.</p>
+      <div class="chosen" id="chosen"></div>
+      <div id="maker"></div>
     </section>
 
     <section aria-labelledby="labels-heading">
@@ -63,10 +58,10 @@
     <section aria-labelledby="download-heading">
       <h2 id="download-heading">Download</h2>
       <div class="downloads">
-        <a href="v1/aia-labels-v1.zip" download>All labels <span>ZIP</span></a>
-        <a href="v1/chart.png" download>Chart <span>PNG</span></a>
-        <a href="v1/chart-icons.png" download>Chart with icons <span>PNG</span></a>
-        <a href="v1/spec.json" download>Label definitions <span>JSON</span></a>
+        <a href="/v1/aia-labels-v1.zip" download>All labels <span>ZIP</span></a>
+        <a href="/v1/chart.png" download>Chart <span>PNG</span></a>
+        <a href="/v1/chart-icons.png" download>Chart with icons <span>PNG</span></a>
+        <a href="/v1/spec.json" download>Label definitions <span>JSON</span></a>
       </div>
     </section>
   </main>
@@ -80,6 +75,6 @@
     </p>
   </footer>
 
-  <script src="app.js"></script>
+  <script src="/app.js"></script>
 </body>
 </html>
