@@ -120,14 +120,16 @@ async function init() {
     });
   }
 
-  // Motto band: each label's row from its grid (tints, with its own square solid), repeated across the page
+  // Motto band: all nine label icons (3×3 grids) side by side, repeated across the page.
+  // The grid fills column by column, so cells go down each column of each icon in turn.
   const mosaic = document.getElementById("mosaic");
   if (mosaic) {
     const cells = spec.codes.flatMap((e) => {
-      const words = Number(e.code.split("x")[1]);
-      return [1, 2, 3].map((c) => (c === words ? e.dark : e.tint));
+      const [ideas, words] = e.code.split("x").map(Number);
+      return [1, 2, 3].flatMap((c) => [1, 2, 3].map((r) => (r === ideas && c === words ? e.dark : e.tint)));
     });
-    mosaic.innerHTML = Array.from({ length: 160 }, (_, i) => `<i style="background:${cells[i % cells.length]}"></i>`).join("");
+    // Enough repeats for very wide screens; the band clips whatever doesn't fit
+    mosaic.innerHTML = Array.from({ length: cells.length * 6 }, (_, i) => `<i style="background:${cells[i % cells.length]}"></i>`).join("");
   }
 
   const chosen = document.getElementById("chosen");
