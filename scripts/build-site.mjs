@@ -1,4 +1,5 @@
-// Prepares the website in site/ for deploy: copies the published label files into site/v1
+// Prepares the website in site/ for deploy: copies the published label files into site/v1 and the
+// Claude skill zip into site/,
 // and writes one page per label (site/1x1/index.html … site/3x3/index.html) from templates/label.html.
 // Usage: npm run build:site
 
@@ -12,6 +13,9 @@ const spec = JSON.parse(readFileSync(join(root, "spec.json"), "utf8"));
 
 rmSync(join(site, spec.version), { recursive: true, force: true });
 cpSync(join(root, "assets", spec.version), join(site, spec.version), { recursive: true });
+
+// The Claude skill, built by scripts/build.mjs
+cpSync(join(root, "skills/aia-labels-skill.zip"), join(site, "aia-labels-skill.zip"));
 
 const escape = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const template = readFileSync(join(root, "templates/label.html"), "utf8");

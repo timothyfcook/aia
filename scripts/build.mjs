@@ -296,6 +296,25 @@ for (const [name, chartFn] of [["chart", gridChart], ["chart-icons", iconsChart]
 writeFileSync(join(outDir, "share.png"), png(siteShare(), SHARE.w));
 for (const entry of spec.codes) writeFileSync(join(outDir, entry.code, "share.png"), png(labelShare(entry), SHARE.w));
 
+// ─── Claude skill ─────────────────────────────────────────────────────────────
+// skills/aia-labels/SKILL.md is filled in from templates/skill.md with the codes and sizes,
+// and zipped for download from aialabels.com.
+{
+  const codesTable = ["| Code | Name | Summary | Description |", "| --- | --- | --- | --- |",
+    ...spec.codes.map((e) => `| ${e.code} | ${e.name} | ${e.summary} | ${e.description} |`)].join("\n");
+  const sizesTable = ["| Code | wide | medium | compact |", "| --- | --- | --- | --- |",
+    ...spec.codes.map((e) => `| ${e.code} | ${sizes[e.code].wide.join("×")} | ${sizes[e.code].medium.join("×")} | ${sizes[e.code].compact.join("×")} |`)].join("\n");
+  const skill = readFileSync(join(root, "templates/skill.md"), "utf8")
+    .replace("{{generated}}", "Generated from templates/skill.md by scripts/build.mjs. Edit the template, not this file.")
+    .replace("{{codes}}", codesTable)
+    .replace("{{sizes}}", sizesTable);
+  const skillDir = join(root, "skills/aia-labels");
+  mkdirSync(skillDir, { recursive: true });
+  writeFileSync(join(skillDir, "SKILL.md"), skill);
+  writeFileSync(join(root, "skills/aia-labels-skill.zip"),
+    zipSync({ "aia-labels/SKILL.md": new TextEncoder().encode(skill) }, { mtime: "2026-10-04T00:00:00Z" }));
+}
+
 writeFileSync(join(outDir, `aia-labels-${spec.version}.zip`), zipSync(zipFiles, { mtime: "2026-10-04T00:00:00Z" }));
 
 // Every badge size, so sites can give snippets an exact width/height
