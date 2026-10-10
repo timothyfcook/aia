@@ -59,6 +59,10 @@ Files are served from `https://aialabels.com/v1/<code>/<file>`, and each label h
 
 Add `-mono` before the extension for the one-color version (e.g. `medium-mono.svg`). Exact sizes for every label are in [`sizes.json`](assets/v1/sizes.json). The chart comes in two styles, [`chart.png`](assets/v1/chart.png) (grid) and [`chart-icons.png`](assets/v1/chart-icons.png) (each label's icon), also as SVG. Everything is also in [`aia-labels-v1.zip`](assets/v1/aia-labels-v1.zip).
 
+## Claude skill
+
+[`skills/aia-labels/SKILL.md`](skills/aia-labels/SKILL.md) teaches Claude to choose an AIA label honestly and output it in the right format for each destination (Markdown, plain text, HTML, page head, Confluence). Download it from [AIAlabels.com](https://aialabels.com) as [`aia-labels-skill.zip`](skills/aia-labels-skill.zip) and add it to Claude. It's generated from [`templates/skill.md`](templates/skill.md) with the codes and sizes from the spec.
+
 ## Website
 
 The AIA website, [AIAlabels.com](https://aialabels.com), is a small static site in [`site/`](site/), deployed with Netlify ([`netlify.toml`](netlify.toml)). Its build (`scripts/build-site.mjs`) copies `assets/v1/` into the site and writes a page for each label from [`templates/label.html`](templates/label.html), so it always matches the spec. To preview it locally, run `npm run build:site` and serve the `site/` folder.
