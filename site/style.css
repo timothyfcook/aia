@@ -18,7 +18,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-main, footer { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+main, footer { max-width: 900px; margin: 0 auto; padding: 0 24px; }
 main { padding-top: 72px; }
 
 a { color: var(--ink); text-decoration-color: var(--line); text-underline-offset: 3px; }
