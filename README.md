@@ -2,6 +2,8 @@
 
 AIA is an attribution system for writing that helps readers understand a writer's intent. It works on two axes, ideas and words, to show how much of a piece came from AI and how much from a person. The goal is to give us all an honest framework for how much attention our writing deserves.
 
+**Website:** [AIAlabels.com](https://aialabels.com)
+
 **Get a label for your writing:** [timothyfcook.com/aia](https://timothyfcook.com/aia)
 
 **Read the reasoning:** [AI Attribution (AIA): Labels for AI Writing](https://timothyfcook.com/writing/2026/is-this-worth-my-attention)
@@ -61,7 +63,7 @@ Add `-mono` before the extension for the one-color version (e.g. `medium-mono.sv
 
 ## Website
 
-The AIA website is a small static page in [`site/`](site/), deployed with Netlify ([`netlify.toml`](netlify.toml)). Its build copies `assets/v1/` into the site, so it always shows the current labels. To preview it locally, run `npm run build:site` and serve the `site/` folder.
+The AIA website, [AIAlabels.com](https://aialabels.com), is a small static page in [`site/`](site/), deployed with Netlify ([`netlify.toml`](netlify.toml)). Its build copies `assets/v1/` into the site, so it always shows the current labels. To preview it locally, run `npm run build:site` and serve the `site/` folder.
 
 ## Versioning
 
