@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Attribution (AIA)</title>
+  <meta name="description" content="An attribution system for writing that indicates the level of AI vs. human contribution, so readers understand a writer's intent.">
+  <meta property="og:title" content="AI Attribution (AIA)">
+  <meta property="og:description" content="An attribution system for writing that indicates the level of AI vs. human contribution, so readers understand a writer's intent.">
+  <meta property="og:image" content="v1/chart.png">
+  <link rel="icon" href="v1/1x1/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>AI Attribution (AIA)</h1>
+      <p class="intro">
+        AIA is an attribution system for writing that helps readers understand a writer's intent. It works on two
+        axes—ideas and words—to indicate the level of AI vs. human contribution. The goal is to give us all an honest
+        framework for how much attention our writing deserves. Read
+        <a href="https://timothyfcook.com/writing/2026/is-this-worth-my-attention">the post</a> for details. This is
+        v1, send me feedback <a href="https://x.com/timothyfcook">@timothyfcook</a>.
+      </p>
+    </header>
+
+    <div class="chart-frame">
+      <img class="chart" src="v1/chart.svg" width="1600" height="1110" alt="AI Attribution (AIA) chart: ideas × words, with the nine labels from No AI to Slop">
+    </div>
+
+    <section aria-labelledby="label-heading">
+      <h2 id="label-heading">Label your writing</h2>
+      <div class="questions">
+        <div role="group" aria-labelledby="ideas-heading">
+          <p class="question" id="ideas-heading">Where did the ideas come from?</p>
+          <div class="options" data-axis="ideas"></div>
+        </div>
+        <div role="group" aria-labelledby="words-heading">
+          <p class="question" id="words-heading">Who wrote the words?</p>
+          <div class="options" data-axis="words"></div>
+        </div>
+      </div>
+      <p class="chosen" id="chosen"></p>
+      <div class="preview"><img id="preview" alt=""></div>
+      <div class="snippet">
+        <pre id="snippet"></pre>
+        <button type="button" id="copy">Copy</button>
+      </div>
+      <p class="more">Markdown shown. For HTML, other sizes and plain text, use the <a href="https://timothyfcook.com/aia">full label maker</a>.</p>
+    </section>
+
+    <section aria-labelledby="labels-heading">
+      <h2 id="labels-heading">Labels</h2>
+      <ul class="labels" id="labels"></ul>
+    </section>
+
+    <section aria-labelledby="download-heading">
+      <h2 id="download-heading">Download</h2>
+      <div class="downloads">
+        <a href="v1/aia-labels-v1.zip" download>All labels <span>ZIP</span></a>
+        <a href="v1/chart.png" download>Chart <span>PNG</span></a>
+        <a href="v1/chart-icons.png" download>Chart with icons <span>PNG</span></a>
+        <a href="v1/spec.json" download>Label definitions <span>JSON</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a rel="license" href="https://creativecommons.org/licenses/by/4.0/"><img src="https://licensebuttons.net/l/by/4.0/88x31.png" width="88" height="31" alt="CC BY 4.0"></a>
+    <p>
+      AIA v1 is licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Use and adapt it
+      freely with credit; a label linked to its page counts as credit. Suggestions and issues are welcome
+      <a href="https://github.com/timothyfcook/aia">on GitHub</a>.
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

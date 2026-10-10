@@ -1,0 +1,5 @@
+# The website lives in site/. The build copies in the published label files,
+# so the site serves them at /v1/... without keeping a second copy in the repo.
+[build]
+  command = "npm run build:site"
+  publish = "site"
