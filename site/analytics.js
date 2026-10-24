@@ -1,9 +1,8 @@
 // PostHog analytics for aialabels.com: pageviews, clicks, and a "label copied" event from app.js.
 // Cookieless (persistence: memory), so there's no consent banner, but each page load counts as a new visitor.
-// Paste the project API key (the public phc_… token) below; until then nothing loads.
-// For an EU project, change API_HOST to https://eu.i.posthog.com.
+// The project API key is a public token, meant to sit in page code. The project is on PostHog's US cloud.
 
-const POSTHOG_KEY = "";
+const POSTHOG_KEY = "phc_ytGhN7CohESd5tKGCuBai2DYUMLhKKNopPyPHhZKhcTv";
 const API_HOST = "https://us.i.posthog.com";
 
 if (POSTHOG_KEY) {
