@@ -165,6 +165,10 @@ async function init() {
       document.execCommand("copy");
       area.remove();
     }
+    // posthog only exists once analytics.js has a project key
+    window.posthog?.capture("label copied", {
+      code: `${state.ideas}x${state.words}`, size: state.size, mono: state.mono, format: state.format, snippet: state.tab,
+    });
     copy.textContent = "Copied";
     setTimeout(() => { copy.textContent = "Copy"; }, 1600);
   });
